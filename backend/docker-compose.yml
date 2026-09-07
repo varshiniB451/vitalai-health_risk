@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:16
+    container_name: vitalai-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: health_risk_ai
+    ports:
+      - "5432:5432"
+    volumes:
+      - vitalai_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d health_risk_ai"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  vitalai_pgdata:
